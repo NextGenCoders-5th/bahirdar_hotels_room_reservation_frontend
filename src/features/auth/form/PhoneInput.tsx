@@ -1,14 +1,15 @@
 import "react-phone-number-input/style.css";
 import flags from "react-phone-number-input/flags";
-import { useFormContext } from "react-hook-form";
 import PhoneInputWithCountry from "react-phone-number-input/react-hook-form";
 import parsePhoneNumberFromString from "libphonenumber-js";
 
-function PhoneInput() {
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext<{ phoneNumber: string }>();
+interface PhoneInputProps {
+  control: any;
+  errors: any;
+}
+
+function PhoneInput({control, errors}: PhoneInputProps) {
+
 
   return (
     <label className="flex flex-1 flex-col tracking-wider text-gray-900">

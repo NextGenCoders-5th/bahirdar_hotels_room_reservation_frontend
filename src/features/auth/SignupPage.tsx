@@ -13,7 +13,7 @@ import { SignupSchema } from "@/features/auth/form/schema/SignupSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 import { useSignupMutation } from "@/redux/api/authApi";
-import toast from "react-hot-toast";
+import toast, { Renderable, Toast, ValueFunction } from "react-hot-toast";
 
 function SignupPage() {
   const formMethods = useForm<ISignup>({
@@ -26,12 +26,12 @@ function SignupPage() {
   const onSubmitHandler = handleSubmit(async (data) => {
     return signup(data)
       .unwrap()
-      .then((response) => {
+      .then((response: { message: Renderable | ValueFunction<Renderable, Toast>; }) => {
         console.log(response);
         toast.success(response.message);
         navigate("/login");
       })
-      .catch((error) => {
+      .catch((error: { data: Error; }) => {
         console.log(error);
         toast.error((error.data as Error).message);
       });

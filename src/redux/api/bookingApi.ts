@@ -22,6 +22,13 @@ export const bookingApi = createApi({
   ],
   baseQuery: fetchBaseQuery({
     baseUrl: `${BASE_URL}/bookings`,
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem("access-token");
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
     credentials: "include",
   }),
   endpoints: (builder) => ({

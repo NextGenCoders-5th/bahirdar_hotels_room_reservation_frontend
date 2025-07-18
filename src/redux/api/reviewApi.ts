@@ -12,6 +12,13 @@ export const reviewApi = createApi({
   tagTypes: [ReviewTags.REVIEWS, ReviewTags.REVIEW],
   baseQuery: fetchBaseQuery({
     baseUrl: `${BASE_URL}/reviews`,
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem("access-token");
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
     credentials: "include",
   }),
   endpoints: (builder) => ({

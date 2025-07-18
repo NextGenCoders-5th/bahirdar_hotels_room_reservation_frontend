@@ -11,7 +11,15 @@ export enum UserTags {
 export const userApi = createApi({
   reducerPath: "userApi",
   tagTypes: [UserTags.USERS, UserTags.USER],
+  
   baseQuery: fetchBaseQuery({
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem("access-token");
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
     baseUrl: `${BASE_URL}/users`,
     credentials: "include",
   }),

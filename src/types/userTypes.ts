@@ -64,6 +64,7 @@ export interface IUser {
   address: IAddress;
   isVerified: boolean;
   isVerificationRequested: boolean;
+  token?: string;
 }
 
 export interface IUserResponse {
@@ -99,6 +100,7 @@ export interface ISignup {
   username: string;
   email: string;
   password: string;
+  phoneNumber: string;
   passwordConfirm: string;
 }
 

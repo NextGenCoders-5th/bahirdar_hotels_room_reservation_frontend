@@ -14,11 +14,18 @@ export const authApi = createApi({
   tagTypes: [Tags.AUTHS, Tags.AUTH],
   baseQuery: fetchBaseQuery({
     baseUrl: `${BASE_URL}/auth`,
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem("access-token");
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
     credentials: "include",
   }),
   endpoints: (builder) => ({
     login: builder.mutation<
-      CreateResponse & { data: IUser & ITimeStamp },
+      CreateResponse & { data: IUser & ITimeStamp, token?: string },
       ILogin
     >({
       query: (loginData) => ({

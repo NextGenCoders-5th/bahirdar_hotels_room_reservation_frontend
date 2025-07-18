@@ -24,6 +24,13 @@ export const favoritesApi = createApi({
   tagTypes: [FavoriteTags.Favorites, FavoriteTags.favorite],
   baseQuery: fetchBaseQuery({
     baseUrl: `${BASE_URL}/favorites`,
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem("access-token");
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
     credentials: "include",
   }),
   endpoints: (builder) => ({

@@ -12,8 +12,23 @@ const HotelsTobeReviewd = () => {
   const { data: { data: hotels } = {}, isLoading: fetchingHotels, error: fetchHotelError } = useGetAllHotelsQuery("")
   const { data: { data: reviews } = {}, isLoading, error } = useGetAllReviewsQuery()
   const { data: { data: { bookings } = {} } = {}, isLoading: loadingBookings, error: bookingLoadErr } = useGetMyBookingsQuery()
-  const toBeviewedBookings = bookings?.filter(booking => reviews?.every(review => !(review.user === booking.user as unknown as string && review.hotel === booking.hotel as unknown as string)))
-  return (
+
+  if (loadingBookings || isLoading || fetchingHotels) {
+    return <LoadingPage />;
+  }
+  if (fetchHotelError || error || bookingLoadErr) {
+    console.error("Error fetching data:", fetchHotelError || error || bookingLoadErr);
+  }
+  const toBeviewedBookings = bookings?.filter(booking => {
+    const hasBeenReviewed = reviews?.some(
+      review =>
+        review.user === (booking.user as unknown as string) &&
+        review.hotel === (booking.hotel as unknown as string)
+    );
+  
+    return new Date(booking.checkIn) < new Date() && !hasBeenReviewed;
+  });
+    return (
     <div className="p-6 space-y-4 max-w-4xl mx-auto">
       <h2 className="text-2xl font-bold text-gray-900">Hotels To be Reviewed</h2>
       {

@@ -15,8 +15,15 @@ export const AccountSidebar = ({ data }: { data: IDataAccountSidebar[] }) => {
 
 
 
-  const toBeviewedBookings = bookings?.filter(booking => reviews?.every(review => !(review.user === booking.user as unknown as string && review.hotel === booking.hotel as unknown as string)))
-  return (
+  const toBeviewedBookings = bookings?.filter(booking => {
+    const hasBeenReviewed = reviews?.some(
+      review =>
+        review.user === (booking.user as unknown as string) &&
+        review.hotel === (booking.hotel as unknown as string)
+    );
+  
+    return new Date(booking.checkIn) < new Date() && !hasBeenReviewed;
+  });  return (
     <ul className="hidden md:flex w-[250px] min-w-[250px] flex-col gap-0 space-y-1 border-r-2 border-light-400 text-gray-700">
       {data.filter(data => !(data.pathname === "/account/bookings" && user?.role !== Role.USER)).map((item, i) => (
         <li key={i}>

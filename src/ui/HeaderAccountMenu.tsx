@@ -41,6 +41,8 @@ function HeaderAccountMenu() {
                   logout()
                     .unwrap()
                     .then(() => {
+                      localStorage.removeItem("access-token");
+                      localStorage.removeItem("user");
                       window.location.href = "/";
                     })
                     .catch((err) => {

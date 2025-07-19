@@ -35,8 +35,8 @@ const UserProfile = () => {
             <ul className="mt-2 text-gray-600">
               <li><strong>Email:</strong> {user?.email}</li>
               <li><strong>Phone:</strong> {user?.phoneNumber}</li>
-              <li><strong>Gender:</strong> {user?.gender}</li>
-              <li><strong>Date of Birth:</strong> {new Date(user?.dateOfBirth || "").toDateString()}</li>
+              <li><strong>Gender:</strong> {user?.gender || <span className=" italic ">No gender</span>}</li>
+              <li><strong>Date of Birth:</strong> {user?.dateOfBirth ? new Date(user?.dateOfBirth || "").toDateString() : <span className="italic">No birth date</span> }</li>
               <li><strong>Role:</strong> {user?.role}</li>
               <li><strong>Verified:</strong> {user?.isVerified ? "Verfied✅" : "Not Verfied❌"}</li>
             </ul>

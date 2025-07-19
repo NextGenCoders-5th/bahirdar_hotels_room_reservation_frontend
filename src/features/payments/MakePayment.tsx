@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "../../components/ui/card";
 import { useAcceptPaymentQuery } from "../../redux/api/paymentsApi";
+import LoadingPage from "@/pages/utils/LoadingPage";
 
 const PaymentPage = () => {
   const { bookingId, hotelId } = useParams();
@@ -18,7 +19,7 @@ const PaymentPage = () => {
   );
 
   if (isLoading) {
-    return <div>Loading booking detail...</div>;
+    return <LoadingPage/>;
   }
   console.log("data", data);
 

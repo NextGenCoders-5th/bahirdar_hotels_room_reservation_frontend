@@ -13,10 +13,12 @@ import MaxWidthWrapper from "../../ui/MaxWidthWrapper";
 import { useGetHotelBookingsQuery } from "@/redux/api/bookingApi";
 import { useGetHotelRoomsQuery } from "@/redux/api/hotelApi";
 import LoadingPage from "@/pages/utils/LoadingPage";
+import { useGetHotelStatQuery } from "@/redux/api/statApi";
 
 
 function ManagerDashboard() {
   const { user } = useAuthContext();
+
 
 
   const { data: { data: bookings } = {}, isLoading, error } = useGetHotelBookingsQuery({ hotelId: user?.hotel?._id || "", params: "" }, {
@@ -24,18 +26,32 @@ function ManagerDashboard() {
     refetchOnReconnect: true,
     skip: !user?.hotel?._id,
   });
-
+ 
   const { data: { data: { rooms } = {} } = {}, isLoading: fetchingRooms, error: roomError } = useGetHotelRoomsQuery(user?.hotel?._id as string, {
     skip: !user?.hotel?._id,
   });
 
+  const {data: {data: stat} ={}, isLoading: statFetching} = useGetHotelStatQuery(user?.hotel?._id as string, {
+    skip: !user?.hotel?._id,
+  });
 
 
-  const { numBookings, numReviews, numRooms, numUsers } = {
-    numBookings: 23,
-    numReviews: 21,
-    numRooms: 3,
-    numUsers: 9
+  if (isLoading || fetchingRooms || statFetching) {
+    return <LoadingPage />;
+  }
+
+
+
+
+  const { allBookings: numBookings = 0,
+    allUsers: numUsers = 0,
+    allRooms: numRooms = 0,
+    allReviews: numReviews = 0
+   } = stat || {
+    allBookings: 0,
+    allReviews: 0,
+    allRooms: 0,
+    allUsers: 0,
   };
 
   const managerStats = [
@@ -63,7 +79,7 @@ function ManagerDashboard() {
         alt="booking"
         className="w-16 h-16"
       />,
-      title: "Users",
+      title: "Booked Users",
       number: numUsers,
     },
     {
@@ -76,6 +92,8 @@ function ManagerDashboard() {
       number: numReviews,
     },
   ];
+
+  console.log("Manager Dashboard Stats: ", stat);
 
   return (
     <>

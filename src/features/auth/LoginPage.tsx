@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ILogin } from "../../types/authTypes";
 import {
   Card,
@@ -18,7 +18,6 @@ import toast from "react-hot-toast";
 
 function SigninPage() {
   const { setUser } = useAuthContext();
-  const navigate = useNavigate();
   const formMethods = useForm<ILogin>({
     resolver: zodResolver(LoginSchema),
   });
@@ -33,9 +32,9 @@ function SigninPage() {
         setUser(response.data);
         localStorage.setItem("access-token", response.token || "");
         if (response.data.role === "user") {
-          navigate("/");
-        } else if (response.data.role === "admin")
-          navigate("/dashboard");
+          window.location.href = "/";
+        } else
+          window.location.href = "/dashboard";
       })
       .catch((error) => {
         if (error.status === 401) {

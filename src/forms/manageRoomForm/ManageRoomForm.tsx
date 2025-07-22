@@ -16,7 +16,7 @@ import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
 interface Props {
-  onSubmit: (room: FormData) => void;
+  onSubmit: (room: FormData) => Promise<void> ;
   room?: IRoom,
   isLoading?: boolean,
   isAdding?: boolean,
@@ -48,7 +48,7 @@ function ManageRoomForm({
     }
   }, [reset, room, roomId, isInUpdateMode, setValue]);
 
-  const onSubmitHandler = handleSubmit((data) => {
+  const onSubmitHandler = handleSubmit(async (data) => {
     const formData = new FormData();
 
     if (!hotelId)
@@ -80,7 +80,13 @@ function ManageRoomForm({
       });
     }
 
-    onSubmit(formData);
+    await onSubmit(formData).then(() => {
+      reset();
+      setValue("isInUpdateMode", false);
+    }).catch((err) => {
+      console.error(err);
+      toast.error("Failed to submit form");
+    })
   });
 
   return (

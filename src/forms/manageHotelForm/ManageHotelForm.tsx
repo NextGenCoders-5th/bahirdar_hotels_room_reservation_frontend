@@ -20,7 +20,7 @@ interface Props {
   isAdding: boolean;
   isLoading?: boolean;
   isUpdating?: boolean;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: FormData) => Promise<void>;
   isInUpdateMode?: boolean;
 }
 function ManageHotelForm({
@@ -156,7 +156,11 @@ function ManageHotelForm({
         formData.append(`hotelImagesFiles`, image);
       });
 
-    onSubmit(formData);
+    onSubmit(formData).then(() => {
+      reset();
+      setSelectedPosition(null);
+      setSelectedManager(null);
+    });
   });
 
   return (
@@ -202,7 +206,7 @@ function ManageHotelForm({
                     }
                     <span>
                       {selectedManager
-                        ? `${selectedManager.firstName} ${selectedManager.lastName}`
+                        ? `${selectedManager.firstName || selectedManager.email} ${selectedManager.lastName || ""}`
                         : "No manager selected yet"}
                     </span>
                     {/* {

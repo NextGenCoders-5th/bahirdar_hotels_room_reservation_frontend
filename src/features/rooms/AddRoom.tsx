@@ -13,7 +13,7 @@ function AddRoom() {
   const { hotelId } = useParams<{ hotelId: string }>();
 
   const [createRoom, { isLoading }] = useCreateRoomMutation()
-  const onSubmitHandler = (room: FormData) => {
+  const onSubmitHandler = async (room: FormData) => {
     try
     {
 

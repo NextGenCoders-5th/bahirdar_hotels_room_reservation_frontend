@@ -18,12 +18,12 @@ interface Props {
 export default function ConfirmAction({ btnText, onConfirm, isOpen, status, setStatus, setIsOpen, btnColor = 'accent-500', confirming }: Props) {
 
     return (
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <Dialog open={isOpen}  onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
                 <button
                     onClick={() => setStatus(status)}
                     className={`px-4 py-1  border bg-[#34343400] border-${btnColor} text-${btnColor} hover:bg-${btnColor} rounded-md hover:text-slate-100`}>
-                    {btnText || `Confirm`}
+                    {btnText?.replace(/ed/g, '') || `Confirm`}
                 </button>
             </DialogTrigger>
             <DialogContent className="max-w-sm bg-slate-200">

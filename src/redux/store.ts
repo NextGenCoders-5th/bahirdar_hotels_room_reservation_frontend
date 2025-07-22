@@ -9,7 +9,8 @@ import { reviewApi } from "./api/reviewApi";
 import { recommendationsApi } from "./api/recommendationsApi";
 import { favoritesApi } from "./api/favoriteApi";
 import { statsApi } from "./api/statApi";
-
+import {messageApi} from "./api/messageApi"; // Importing messageApi for side effects
+import chatReduser from "./reducers/chat.slice"; // Importing chat slice reducer
 export const store = configureStore({
   reducer: {
     [userApi.reducerPath]: userApi.reducer,
@@ -22,6 +23,8 @@ export const store = configureStore({
     [recommendationsApi.reducerPath]: recommendationsApi.reducer,
     [favoritesApi.reducerPath]: favoritesApi.reducer,
     [statsApi.reducerPath]: statsApi.reducer,
+    [messageApi.reducerPath]: messageApi.reducer, // Adding messageApi reducer
+    chat: chatReduser, // Adding chat slice reducer to the store
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -34,7 +37,8 @@ export const store = configureStore({
       .concat(reviewApi.middleware)
       .concat(recommendationsApi.middleware)
       .concat(favoritesApi.middleware)
-      .concat(statsApi.middleware),
+      .concat(statsApi.middleware)
+      .concat(messageApi.middleware), // Adding messageApi middleware
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -15,7 +15,7 @@ function DetailSection() {
         <label htmlFor="name">Name</label>
         <input
           type="text"
-          defaultValue="Addis International Hotel"
+          // defaultValue="Addis International Hotel"
           className="w-full rounded-md border bg-slate-200 px-3 py-2 focus-visible:outline-accent-500 hover:outline-none"
           placeholder="abc international hotel"
           {...register("name", {
@@ -39,7 +39,7 @@ function DetailSection() {
           </label>
           <input
             type="text"
-            defaultValue="Bahir Dar"
+            // defaultValue="Bahir Dar"
             className="rounded-md border bg-slate-200 px-3 py-2 focus-visible:outline-accent-500 hover:outline-none"
             placeholder="Bahir Dar, Amhara, 16km from the main straight"
             {...register("address.city", {
@@ -58,7 +58,7 @@ function DetailSection() {
           <input
             type="text"
             id="sub-city"
-            defaultValue="Felege Hiwot"
+            // defaultValue="Felege Hiwot"
             className="rounded-md border bg-slate-200 px-3 py-2 focus-visible:outline-accent-500 hover:outline-none"
             placeholder="Bahir Dar, Amhara, 16km from the main straight"
             {...register("address.subcity", {
@@ -76,7 +76,7 @@ function DetailSection() {
           </label>
           <input
             type="text"
-            defaultValue="Street 003"
+            // defaultValue="Street 003"
             className="rounded-md border bg-slate-200 px-3 py-2 focus-visible:outline-accent-500 hover:outline-none"
             placeholder="Bahir Dar, Amhara, 16km from the main straight"
             {...register("address.street")}
@@ -90,7 +90,7 @@ function DetailSection() {
           <input
             type="text"
             id="woreda"
-            defaultValue="Woreda 01"
+            // defaultValue="Woreda 01"
             className="rounded-md border bg-slate-200 px-3 py-2 focus-visible:outline-accent-500 hover:outline-none"
             placeholder="Bahir Dar, Amhara, 16km from the main straight"
             {...register("address.woreda")}
@@ -154,7 +154,7 @@ function DetailSection() {
         <label>Summary</label>
         <input
           type="text"
-          defaultValue="5-star hotel located in the heart of Addis Ababa, Ethiopia"
+          // defaultValue="5-star hotel located in the heart of Addis Ababa, Ethiopia"
           className="w-full rounded-md border bg-slate-200 px-3 py-2 focus-visible:outline-accent-500 hover:outline-none"
           placeholder="Hotel summary"
           {...register("summary", {
@@ -177,7 +177,7 @@ function DetailSection() {
           rows={5}
           className="w-full rounded-lg border bg-slate-200 px-3 py-2 hover:outline-none"
           placeholder="Hotel description"
-          defaultValue="Addis International Hotel is a 5-star hotel located in the heart of Addis Ababa, Ethiopia. The hotel offers a luxurious experience with its spacious rooms, modern amenities, and exceptional service. Whether you are traveling for business or pleasure, Addis International Hotel is the perfect choice for your stay in Addis Ababa."
+          // defaultValue="Addis International Hotel is a 5-star hotel located in the heart of Addis Ababa, Ethiopia. The hotel offers a luxurious experience with its spacious rooms, modern amenities, and exceptional service. Whether you are traveling for business or pleasure, Addis International Hotel is the perfect choice for your stay in Addis Ababa."
           {...register("description", {
             required: "A hotel must have a description",
             minLength: {

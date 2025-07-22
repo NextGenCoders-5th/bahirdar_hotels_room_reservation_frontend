@@ -48,7 +48,7 @@ const Account = () => {
             to: "favorites",
             pathname: "/account/favorites",
             text: "Favorite hotels",
-          }
+          },
         ]
       }
       />

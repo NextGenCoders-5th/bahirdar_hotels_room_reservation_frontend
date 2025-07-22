@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
+import { Role } from "@/enums/roleEnum";
 import { useGetAllUsersQuery } from "@/redux/api/userApi";
 import { IUser } from "@/types/userTypes";
 import Search from "@/ui/Search";
@@ -51,7 +52,7 @@ export function AddCashier({ selectedCashier, setSelectedCashier }: Props) {
                     </div>
                 ) : (
                     <div className="p-4 h-[50vh] overflow-y-scroll">
-                        {data.data?.map((user) => (
+                        {data.data?.filter(user => user.role === Role.USER).map((user) => (
                             <div
                                 onClick={() => {
                                     if (selectedCashier?._id === user._id)

@@ -116,11 +116,6 @@ function DashboardLayout() {
                   title: "Cashiers",
                   url: "/dashboard/cashiers",
                   Icon: <HiOutlineUsers size={20} />,
-                },
-                {
-                  title: "Settings",
-                  url: "/dashboard/settings",
-                  Icon: <MdSettings size={20} />,
                 }] : [])]} />
       ) : null}
       <div className="bg-slate-50 flex min-h-screen w-screen flex-col gap-2 text-gray-700 md:w-[calc(100vw-260px)]">

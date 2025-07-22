@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar } from "@radix-ui/react-avatar";
-import { useGetBookingByIdQuery, useUpdateBookingStatusMutation } from "../../redux/api/bookingApi";
+import { useCancelMyBookingMutation, useGetBookingByIdQuery } from "../../redux/api/bookingApi";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingPage from "../../pages/utils/LoadingPage";
 import NotFoundPage from "../../pages/utils/NotFoundPage";
@@ -21,7 +21,7 @@ export default function MyBookingDetail() {
     const { bookingId } = useParams<{ bookingId: string }>();
     const { data: { data: booking } = {}, isLoading, error } = useGetBookingByIdQuery(bookingId as string);
     const { data: { data: { reviews } = {} } = {} } = useGetHotelReviewsQuery(booking?.hotel._id as string, { skip: !booking?.hotel._id });
-    const [confirimAction, { isLoading: updating }] = useUpdateBookingStatusMutation();
+    const [cancelBooking, { isLoading: updating }] = useCancelMyBookingMutation();
     const [isOpen, setIsOpen] = useState(false);
     const [status, setStatus] = useState<BookingStatus | null>(null);
 
@@ -29,10 +29,8 @@ export default function MyBookingDetail() {
         try
         {
             if (!status) return;
-            confirimAction({
+            cancelBooking({
                 bookingId: bookingId as string,
-                userId: booking?.user._id as string,
-                status: BookingStatus.CANCELLED
             }).unwrap().then(() => {
                 toast.success(`Book  ${BookingStatus.CANCELLED} successfully`);
                 setIsOpen(false);
@@ -111,7 +109,7 @@ export default function MyBookingDetail() {
                                                 )
                                             }
                                             {
-                                                !booking.isPaid && (
+                                                !booking.isPaid && booking.status !== BookingStatus.CANCELLED &&  (
                                                     <button
                                                         onClick={() => {
                                                             navigate(`/account/bookings/${booking._id}/pay`)
@@ -135,7 +133,7 @@ export default function MyBookingDetail() {
                                                 )
                                             }
                                             {
-                                                !booking.isPaid && (
+                                                !booking.isPaid && booking.status !== BookingStatus.CANCELLED && (
                                                     <ConfirmAction
                                                         setStatus={setStatus}
                                                         feature="Booking"
@@ -148,6 +146,12 @@ export default function MyBookingDetail() {
                                                         btnText={createLabel(BookingStatus.CANCELLED)}
                                                         btnColor={getBookingStausBtnColor(BookingStatus.CANCELLED)}
                                                     />
+                                                )
+                                            }
+                                            {
+                                                booking.status === BookingStatus.CANCELLED && (
+                                                    <Badge className="bg-red-100 hover:bg-red-200 text-red-600">{"Cancelled"}</Badge>
+
                                                 )
                                             }
                                         </div>

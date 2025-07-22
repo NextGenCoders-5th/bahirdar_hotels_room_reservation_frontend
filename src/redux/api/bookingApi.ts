@@ -188,6 +188,16 @@ export const bookingApi = createApi({
         ];
       },
     }),
+    cancelMyBooking: builder.mutation<
+      { data: IBooking } & Omit<CreateResponse, "data">,
+      { bookingId: string }
+    >({
+      query: ({ bookingId }) => ({
+        url: `/cancel-my-booking?bookingId=${bookingId}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: [BookingTags.BOOKINGS, BookingTags.BOOKING],
+    }),
   }),
 });
 
@@ -202,4 +212,5 @@ export const {
   useUpdateBookingStatusMutation,
   useGetRoomBookingsByRoomIdQuery,
   useGetUserBookingsByUserIdQuery,
+  useCancelMyBookingMutation,
 } = bookingApi;

@@ -50,6 +50,7 @@ import { Role } from "./enums/roleEnum.js";
 import HotelsTobeReviewd from "./features/reviews/HotelsTobeReviewed.js";
 import ToBePayed from "./features/payments/TobePayed.js";
 import MyFavoriteGotels from "./features/reviews/FavoriteHotels.js";
+import ChatRoom from "./components/ChatRoom.js";
 
 function App() {
   const { role, isLoggedIn, user } = useAuthContext();
@@ -105,6 +106,7 @@ function App() {
               <Route path="account" element={<Account />}>
                 <Route path="profile" index element={<Profile />} />
                 <Route path="settings" element={<AccountSettings />} />
+                <Route path="chat" element={<ChatRoom />} />
                 <Route path="bookings" element={<MyBookings />} />
                 <Route path="favorites" element={<MyFavoriteGotels />} />
                 <Route
